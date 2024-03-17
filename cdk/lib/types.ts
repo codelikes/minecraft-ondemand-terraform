@@ -47,7 +47,7 @@ export interface StackConfig {
   /**
    * The AWS region to deploy your minecraft server in.
    *
-   * @default "us-east-1"
+   * @default "eu-central-1"
    */
   serverRegion: string;
   /**

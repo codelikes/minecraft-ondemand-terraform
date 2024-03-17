@@ -19,7 +19,7 @@ const domainStack = new DomainStack(app, 'minecraft-domain-stack', {
   env: {
     /**
      * Because we are relying on Route 53+CloudWatch to invoke the Lambda function,
-     * it _must_ reside in the N. Virginia (us-east-1) region.
+     * it _must_ reside in the N. Virginia (eu-central-1) region.
      */
     region: constants.DOMAIN_STACK_REGION,
     /* Account must be specified to allow for hosted zone lookup */

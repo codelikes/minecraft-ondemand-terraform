@@ -21,7 +21,7 @@ resource "aws_ecs_task_definition" "mc" {
     {
       name      = "minecraft-server"
       image     = "itzg/minecraft-server"
-      essential = false
+      essential = true
       mountPoints = [
         {
           sourceVolume  = "data",

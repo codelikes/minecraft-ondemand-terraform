@@ -24,7 +24,7 @@ const resolveMinecraftEnvVars = (json = ''): MinecraftImageEnv => {
 export const resolveConfig = (): StackConfig => ({
   domainName: process.env.DOMAIN_NAME || '',
   subdomainPart: process.env.SUBDOMAIN_PART || 'minecraft',
-  serverRegion: process.env.SERVER_REGION || 'us-east-1',
+  serverRegion: process.env.SERVER_REGION || 'eu-central-1',
   minecraftEdition:
     process.env.MINECRAFT_EDITION === 'bedrock' ? 'bedrock' : 'java',
   shutdownMinutes: process.env.SHUTDOWN_MINUTES || '20',

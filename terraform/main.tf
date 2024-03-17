@@ -8,6 +8,8 @@ terraform {
 }
 
 provider "aws" {
+  region = "eu-central-1"
+  profile = "mineworld"
   default_tags {
     tags = {
       App = "Minecraft"
@@ -16,8 +18,9 @@ provider "aws" {
 }
 
 provider "aws" {
-  alias  = "us-east-1"
-  region = "us-east-1"
+  alias  = "eu-central-1"
+  region = "eu-central-1"
+  profile = "mineworld"
   default_tags {
     tags = {
       App = "Minecraft"
@@ -58,7 +61,7 @@ module "compute" {
 
 module "notify" {
   providers = {
-    aws.east1 = aws.us-east-1
+    aws.east1 = aws.eu-central-1
   }
   source     = "./modules/notify"
   dns-domain = var.dns-domain

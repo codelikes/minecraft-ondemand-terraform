@@ -91,7 +91,7 @@ Things you will locate as you go along and will need during IAM policy creation:
 
 ## Region Selection
 
-While it doesn't matter which region you decide to run your server in, **Route 53 will only ship its logs to us-east-1**, which in turns means that the lambda function also has to be in us-east-1. This lambda function can fire off the server in another region without issue, as long as the destination region is specified within the lambda function code. For the purposes of this documentation, I'm using `us-west-2` to run my server.
+While it doesn't matter which region you decide to run your server in, **Route 53 will only ship its logs to eu-central-1**, which in turns means that the lambda function also has to be in eu-central-1. This lambda function can fire off the server in another region without issue, as long as the destination region is specified within the lambda function code. For the purposes of this documentation, I'm using `us-west-2` to run my server.
 
 Double check the region in anything you're copy/pasting.
 
@@ -133,7 +133,7 @@ Open the VPC console, find `Security Groups` on the left hand side. Select the d
 
 A lambda function must exist that turns on your minecraft service. We do this with a simple python function that change the "Tasks Desired" count from zero to one when it is invoked. We haven't created the ECS service yet, but that's okay, because we decided on the cluster name and service name before we started.
 
-Because we are relying on Route 53+CloudWatch to invoke the Lambda function, it _must_ reside in the N. Virginia (us-east-1) region.
+Because we are relying on Route 53+CloudWatch to invoke the Lambda function, it _must_ reside in the N. Virginia (eu-central-1) region.
 
 From the Lambda console, create a new function using `Author from scratch`. I've used Python 3.9 but the latest version available should be fine. Call it `minecraft-launcher`. The other defaults are fine, it will create an IAM role we will modify afterward. We do not need to specify a VPC.
 
@@ -446,7 +446,7 @@ Tap `Next`, `Next`, and `Create Service`.
 
 The final step to link everything together is to configure CloudWatch to start your server when you try to connect to it.
 
-Open the CloudWatch console and change to the `us-east-1` region. Go to `Logs` -> `Log groups` -> and find the `/aws/route53/yourdomainname.com` Log group that we created in the Route 53 Query Log Configuration. Optionally, modify the retention period to delete the logs after a few days so they don't accumulate forever.
+Open the CloudWatch console and change to the `eu-central-1` region. Go to `Logs` -> `Log groups` -> and find the `/aws/route53/yourdomainname.com` Log group that we created in the Route 53 Query Log Configuration. Optionally, modify the retention period to delete the logs after a few days so they don't accumulate forever.
 
 Go to the `Subscription filters` tab, click `Create` and then `Create Lambda subscription filter`.
 

@@ -74,6 +74,6 @@ resource "aws_route53_record" "mc" {
 }
 
 resource "aws_route53_query_log" "mc" {
-  cloudwatch_log_group_arn = var.cw-lg
+  cloudwatch_log_group_arn = "${var.cw-lg}"
   zone_id                  = aws_route53_zone.mc.zone_id
 }
