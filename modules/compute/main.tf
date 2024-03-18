@@ -21,7 +21,7 @@ resource "aws_ecs_task_definition" "mc" {
     {
       name      = "minecraft-server"
       image     = "itzg/minecraft-server"
-      essential = true
+      essential = false
       mountPoints = [
         {
           sourceVolume  = "data",
@@ -84,6 +84,7 @@ resource "aws_ecs_service" "mc" {
   cluster         = aws_ecs_cluster.mc.id
   task_definition = aws_ecs_task_definition.mc.arn
   desired_count   = 0
+  enable_execute_command = true
 
   capacity_provider_strategy {
     capacity_provider = "FARGATE"
@@ -181,7 +182,7 @@ resource "aws_lambda_function" "mc" {
 resource "aws_lambda_permission" "mc" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.mc.function_name
-  principal     = "logs.${var.region}.amazonaws.com"
+  principal     = "logs.${var.logs-region}.amazonaws.com"
   source_arn    = "${var.cw-lg}:*"
 }
 

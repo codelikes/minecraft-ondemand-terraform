@@ -10,6 +10,6 @@ variable "servername" {
   type = string
 }
 
-variable "cw-lg" {
+variable "domain_zone_id" {
   type = string
 }

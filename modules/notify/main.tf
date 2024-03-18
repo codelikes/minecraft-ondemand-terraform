@@ -14,14 +14,21 @@ data "aws_iam_policy_document" "mc" {
     actions = [
       "logs:CreateLogStream",
       "logs:PutLogEvents",
+      "lambda:InvokeFunction",
+      "sts:AssumeRole",
+      "route53:*",
+    ]
+    effect = "Allow"
+    resources = [
+      "arn:aws:logs:*:*:log-group:/aws/route53/*",
+      "arn:aws:lambda:*:*:function:minecraft-*",
     ]
 
-    resources = ["arn:aws:logs:*:*:log-group:/aws/route53/*"]
-
     principals {
-      identifiers = ["route53.amazonaws.com"]
+      identifiers = ["route53.amazonaws.com", "logs.amazonaws.com", "lambda.amazonaws.com"]
       type        = "Service"
     }
+
   }
 }
 
@@ -38,6 +45,7 @@ resource "aws_cloudwatch_log_resource_policy" "mc" {
 }
 
 resource "aws_cloudwatch_log_group" "mc" {
+  provider = aws.east1
   name              = "/aws/route53/${var.dns-domain}"
   retention_in_days = 7
 }
@@ -45,4 +53,9 @@ resource "aws_cloudwatch_log_group" "mc" {
 resource "aws_sns_topic" "mc" {
   name              = "minecraft-notifications"
   kms_master_key_id = "alias/aws/sns"
+}
+
+resource "aws_route53_query_log" "mc" {
+  cloudwatch_log_group_arn = aws_cloudwatch_log_group.mc.arn
+  zone_id                  = var.r53-zone-id
 }

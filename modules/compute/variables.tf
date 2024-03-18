@@ -10,6 +10,10 @@ variable "region" {
   type = string
 }
 
+variable "logs-region" {
+  type = string
+}
+
 variable "fs-id" {
   type = string
 }

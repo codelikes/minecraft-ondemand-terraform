@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "eu-central-1"
+  region = "us-east-1"
   profile = "mineworld"
   default_tags {
     tags = {
@@ -18,8 +18,8 @@ provider "aws" {
 }
 
 provider "aws" {
-  alias  = "eu-central-1"
-  region = "eu-central-1"
+  alias  = "us-east-1"
+  region = "us-east-1"
   profile = "mineworld"
   default_tags {
     tags = {
@@ -34,7 +34,7 @@ module "networking" {
   region     = var.aws-region
   domain     = var.dns-domain
   servername = var.servername
-  cw-lg      = module.notify.cw-lg
+  domain_zone_id = var.domain-zone-id
 }
 
 module "storage" {
@@ -57,14 +57,16 @@ module "compute" {
   servername  = var.servername
   cw-lg       = module.notify.cw-lg
   r53-zone-id = module.networking.r53-zone-id
+  logs-region = var.logs-region
 }
 
 module "notify" {
   providers = {
-    aws.east1 = aws.eu-central-1
+    aws.east1 = aws.us-east-1
   }
   source     = "./modules/notify"
   dns-domain = var.dns-domain
   servername = var.servername
+  r53-zone-id = module.networking.r53-zone-id
   lambda     = module.compute.lambda
 }

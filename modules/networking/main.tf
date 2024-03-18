@@ -72,8 +72,3 @@ resource "aws_route53_record" "mc" {
   ttl     = 30
   records = ["127.0.0.1"]
 }
-
-resource "aws_route53_query_log" "mc" {
-  cloudwatch_log_group_arn = "${var.cw-lg}"
-  zone_id                  = aws_route53_zone.mc.zone_id
-}
